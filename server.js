@@ -22,7 +22,7 @@ const server = http.createServer(app);
 
 /* ─── WebSocket ─── */
 const wss      = new WebSocket.Server({ server, path: '/ws' });
-const wsHandler = require('./services/ws-chat');
+
 
 wss.on('connection', (ws) => {
   console.log('[WS] Client connected. Total:', wss.clients.size);
