@@ -1296,3 +1296,34 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 </script>
 </body>
 </html>
+
+
+
+</body>
+
+<script>
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const message = input.value;
+
+  if (!message) return;
+
+  try {
+    const res = await fetch('https://emotional-aare-machine-eam-backend.onrender.com/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [{ role: 'user', content: message }]
+      })
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+</script>
+
+</html>
