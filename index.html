@@ -782,8 +782,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height
 'use strict';
 
 /* ─── Config ─── */
-const API_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1')
-  ? `http://${location.hostname}:3000` : location.origin;
+const API_BASE = 'https://emotional-aare-machine-eam-backend.onrender.com';
 
 /* ─── State ─── */
 const S = {
@@ -1012,7 +1011,7 @@ async function loadMusic(emotion,language){
   const emo=emap[emotion]||'neutral';
   setText('music-mood-label',emotion[0].toUpperCase()+emotion.slice(1));
   try{
-    const r=await fetch(`${API_BASE}/api/music/recommend?emotion=${emo}&language=${language}&max=14`);
+    const r=await fetch(`https://emotional-aare-machine-eam-backend.onrender.com/api/music/recommend?emotion=${emo}&language=${language}&max=14`);
     if(!r.ok)throw new Error(`HTTP ${r.status}`);
     const data=await r.json();
     S.allTracks=data.tracks||[];S.tracks=S.allTracks;
@@ -1095,7 +1094,7 @@ async function sendChat(){
   S.chatMsgs.push({role:'user',content:text});
   addMsg('user',text);showTyping();
   try{
-    const r=await fetch(`${API_BASE}/api/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:S.chatMsgs.map(m=>({role:m.role==='ai'?'assistant':m.role,content:m.content})),emotion:S.emotion,language:chatLang,stream:true})});
+    const r=await fetch(`https://emotional-aare-machine-eam-backend.onrender.com/api/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:S.chatMsgs.map(m=>({role:m.role==='ai'?'assistant':m.role,content:m.content})),emotion:S.emotion,language:chatLang,stream:true})});
     if(!r.ok)throw new Error(`HTTP ${r.status}`);
     removeTyping();
     const body=document.getElementById('chat-body'),now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
@@ -1113,7 +1112,7 @@ async function sendChat(){
     S.chatMsgs.push({role:'ai',content:full});
   }catch(e){
     removeTyping();
-    addMsg('ai',`Backend se connect nahi hua 😕\nRun: cd backend && npm start\n\nError: ${e.message}`);
+    addMsg('ai',`Backend se connect nahi hua 😕\nError: ${e.message}`);
   }
   chatBusy=false;
 }
@@ -1124,7 +1123,7 @@ function autoResize(el){el.style.height='auto';el.style.height=Math.min(120,el.s
 async function loadAISuggestion(){
   if(S.emotion.dominant==='neutral'&&!S.scans)return;
   try{
-    const r=await fetch(`${API_BASE}/api/chat/suggest`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({emotion:S.emotion})});
+    const r=await fetch(`https://emotional-aare-machine-eam-backend.onrender.com/api/chat/suggest`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({emotion:S.emotion})});
     if(r.ok){const d=await r.json();if(d.suggestion)addMsg('ai',d.suggestion);}
   }catch(e){
     addMsg('ai',`Namaste! 🙏 Main EAM hoon — Gemini AI se powered tumhara emotional music companion.\n\nTumhara mood: ${S.emotion.dominant||'neutral'}. Batao, kaisa feel ho raha hai aaj? 🎵`);
@@ -1251,7 +1250,7 @@ function initProfile(){
 async function checkAPI(){
   const el=document.getElementById('api-status');if(el)el.textContent='Checking…';
   try{
-    const r=await fetch(`${API_BASE}/api/health`,{signal:AbortSignal.timeout(4000)});
+    const r=await fetch(`https://emotional-aare-machine-eam-backend.onrender.com/api/health`,{signal:AbortSignal.timeout(4000)});
     const d=await r.json();
     if(el)el.textContent=`Gemini:${d.env.gemini?'✓':'✗'} · YouTube:${d.env.youtube?'✓':'✗'} · Running ✓`;
     toast(`Backend OK · Gemini:${d.env.gemini?'✓':'✗'} · YouTube:${d.env.youtube?'✓':'✗'}`);
@@ -1295,35 +1294,4 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 })();
 </script>
 </body>
-</html>
-
-
-
-</body>
-
-<script>
-async function sendChat() {
-  const input = document.getElementById('chat-input');
-  const message = input.value;
-
-  if (!message) return;
-
-  try {
-    const res = await fetch('https://emotional-aare-machine-eam-backend.onrender.com/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: [{ role: 'user', content: message }]
-      })
-    });
-
-    const data = await res.json();
-    console.log(data);
-
-  } catch (err) {
-    console.error(err);
-  }
-}
-</script>
-
 </html>
