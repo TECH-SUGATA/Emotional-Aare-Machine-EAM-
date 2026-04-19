@@ -68,9 +68,10 @@ const musicLimiter = rateLimit({ windowMs: 60_000, max: 80 });
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 /* ─── Routes ─── */
-app.use('/api/chat',    chatLimiter,  chatRoutes);
-app.use('/api/music',   musicLimiter, musicRoutes);
-app.use('/api/emotion',               emotionRoutes);
+
+const chatRoutes    = require('./chat');
+const musicRoutes   = require('./music');
+const emotionRoutes = require('./emotion');
 
 /* ─── Health Check ─── */
 app.get('/api/health', (req, res) => {
