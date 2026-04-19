@@ -34,7 +34,13 @@ wss.on('connection', (ws) => {
         ws.send(JSON.stringify({ type: 'pong' }));
         return;
       }
-      if (msg.type === 'chat') await wsHandler(ws, msg);
+
+      if (msg.type === 'chat') {
+  ws.send(JSON.stringify({
+    type: 'message',
+    message: 'Chat temporarily disabled'
+  }));
+}
     } catch {
       ws.send(JSON.stringify({ type: 'error', message: 'Invalid message format' }));
     }
