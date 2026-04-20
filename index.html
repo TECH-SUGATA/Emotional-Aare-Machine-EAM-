@@ -1297,11 +1297,16 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 </html>
 
 
+
+<!-- ✅ YouTube Player Container (MOVE ABOVE </body>) -->
+<div id="yt-iframe-container"></div>
+
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
 let ytPlayer;
 
+// ✅ YouTube Player Ready
 function onYouTubeIframeAPIReady() {
   ytPlayer = new YT.Player('yt-iframe-container', {
     height: '0',
@@ -1314,10 +1319,25 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
+// ✅ Play Song
 function playSong(videoId) {
   if (ytPlayer) {
     ytPlayer.loadVideoById(videoId);
+  } else {
+    console.error("YouTube player not ready");
   }
+}
+
+// ✅ THIS IS MAIN FIX (PLAY TRACK)
+function playTrack(track) {
+  console.log("Track clicked:", track);
+
+  if (!track || !track.videoId) {
+    console.error("No videoId found", track);
+    return;
+  }
+
+  playSong(track.videoId);
 }
 
 // ✅ CHAT FUNCTION
@@ -1340,6 +1360,11 @@ async function sendChat() {
 
     const text = await res.text();
     console.log("RAW:", text);
+
+    if (text.includes("QuotaFailure")) {
+      addMessage("⚠️ Daily limit reached. Try tomorrow.", "ai");
+      return;
+    }
 
     let data;
     try {
