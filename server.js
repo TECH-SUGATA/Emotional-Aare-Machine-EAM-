@@ -12,7 +12,7 @@ const http      = require('http');
 const WebSocket = require('ws');
 const path      = require('path');
 
-// ✅ Correct imports (NO routes folder)
+// ✅ Routes
 const chatRoutes    = require('./chat');
 const musicRoutes   = require('./music');
 const emotionRoutes = require('./emotion');
@@ -21,8 +21,7 @@ const app    = express();
 const server = http.createServer(app);
 
 /* ─── WebSocket ─── */
-const wss      = new WebSocket.Server({ server, path: '/ws' });
-
+const wss = new WebSocket.Server({ server, path: '/ws' });
 
 wss.on('connection', (ws) => {
   console.log('[WS] Client connected. Total:', wss.clients.size);
@@ -30,37 +29,39 @@ wss.on('connection', (ws) => {
   ws.on('message', async (raw) => {
     try {
       const msg = JSON.parse(raw.toString());
+
       if (msg.type === 'ping') {
         ws.send(JSON.stringify({ type: 'pong' }));
         return;
       }
 
       if (msg.type === 'chat') {
-  ws.send(JSON.stringify({
-    type: 'message',
-    message: 'Chat temporarily disabled'
-  }));
-}
+        ws.send(JSON.stringify({
+          type: 'message',
+          message: 'Chat temporarily disabled'
+        }));
+      }
+
     } catch {
       ws.send(JSON.stringify({ type: 'error', message: 'Invalid message format' }));
     }
   });
 
-  ws.on('close', () =>
-    console.log('[WS] Client disconnected. Total:', wss.clients.size)
-  );
+  ws.on('close', () => {
+    console.log('[WS] Client disconnected. Total:', wss.clients.size);
+  });
 
   ws.send(JSON.stringify({
     type: 'connected',
-    message: 'EAM Mirror v2 WebSocket ready ✓'
+    message: 'EAM Mirror WebSocket ready ✓'
   }));
 });
 
 /* ─── Middleware ─── */
 app.use(helmet({ crossOriginEmbedderPolicy: false }));
 
-// ✅ FIXED static (serve index.html correctly)
-app.use(express.static(__dirname));
+// ✅ IMPORTANT: serve frontend correctly
+app.use(express.static(path.join(__dirname)));
 
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
@@ -102,7 +103,7 @@ const musicLimiter = rateLimit({
   max: 80
 });
 
-/* ─── Routes ─── */
+/* ─── API Routes (VERY IMPORTANT: BEFORE *) ─── */
 app.use('/api/chat', chatLimiter, chatRoutes);
 app.use('/api/music', musicLimiter, musicRoutes);
 app.use('/api/emotion', emotionRoutes);
@@ -115,13 +116,13 @@ app.get('/api/health', (req, res) => {
     version: '2.0.0',
     timestamp: new Date().toISOString(),
     env: {
-      gemini: !!process.env.GEMINI_API_KEY,
+      gemini:  !!process.env.GEMINI_API_KEY,
       youtube: !!process.env.YOUTUBE_API_KEY,
     },
   });
 });
 
-/* ─── SPA Fallback ─── */
+/* ─── SPA Fallback (ALWAYS LAST) ─── */
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
