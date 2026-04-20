@@ -1,142 +1,112 @@
-# 🪞 EAM Mirror v2 — Emotional AI Music Companion
-### 100% FREE APIs — No Credit Card Needed
-
-![Free](https://img.shields.io/badge/Cost-100%25%20FREE-22c55e?style=for-the-badge)
-![Gemini](https://img.shields.io/badge/AI-Google%20Gemini%202.5%20Flash-4285F4?style=for-the-badge)
-![YouTube](https://img.shields.io/badge/Music-YouTube%20API%20v3-FF0000?style=for-the-badge)
-
----
-
-## ✨ What's Free & How
-
-| Feature | Technology | Cost |
-|---|---|---|
-| 😊 Real-time emotion detection | face-api.js (runs in browser) | **FREE forever** |
-| 🤖 AI chat (Hindi/Hinglish/English) | Google Gemini 2.5 Flash | **FREE** (generous quota) |
-| 🎵 Indian music recommendations | AI picks songs → YouTube search | **FREE** (10K units/day) |
-| ▶️ In-app music playback | YouTube IFrame Player API | **FREE** |
-| 🎭 5 visual themes | Built-in CSS | **FREE** |
-| 📓 Mood journal | localStorage | **FREE** |
-
----
-
-## 🚀 3-Step Setup
-
-### Step 1 — Get 2 FREE API Keys (5 minutes)
-
-**A) Google Gemini Key (for AI chat)**
-1. Visit [aistudio.google.com](https://aistudio.google.com)
-2. Sign in with Google account
-3. Click **"Get API Key"** → **"Create API key"**
-4. Copy the key (starts with `AIza...`)
-
-**B) YouTube Data API v3 Key (for music)**
-1. Visit [console.developers.google.com](https://console.developers.google.com)
-2. Create a new project → **"Enable APIs"**
-3. Search **"YouTube Data API v3"** → Enable it
-4. Go to **Credentials** → **"+ Create Credentials"** → **API Key**
-5. Copy the key (also starts with `AIza...`)
-
-> Both keys can be the SAME Google project — just enable both APIs!
-
----
-
-### Step 2 — Setup Backend
-
-```bash
-cd eam-mirror/backend
-
-# Install dependencies
+🪞 Emotional Aware Machine (EAM)
+🎧 Emotion → Intelligence → Music
+🌐 Live Experience
+👉 https://tech-sugata.github.io/Emotional-Aare-Machine-EAM-/⁠�
+�
+�
+�
+�
+✨ What is EAM?
+Emotional Aware Machine (EAM) is an intelligent digital companion that understands how you feel — and responds with the perfect soundtrack.
+It blends real-time emotion detection, AI-driven conversation, and context-aware music recommendations into one seamless experience.
+Not just a music app — it's an emotionally adaptive system.
+⚡ Core Experience
+Plain text
+You → Camera → Emotion Detection → AI Understanding → Music + Conversation
+EAM continuously interprets your emotional state and adapts in real time.
+🚀 Features
+😊 Emotion Intelligence
+Real-time facial emotion recognition
+Runs directly in the browser
+No external processing required
+🎵 Smart Music Engine
+Emotion-driven song selection
+Multi-language music support
+Seamless in-app playback
+🤖 AI Companion
+Conversational AI powered interactions
+Supports Hindi, Hinglish, and English
+Context-aware emotional responses
+🎭 Adaptive UI System
+Dynamic themes based on mood
+Immersive dark premium interface
+📓 Personal Mood Journal
+Save emotional states over time
+Lightweight and private
+🧠 System Architecture
+Plain text
+Frontend (UI + Camera + Emotion Engine)
+            ↓
+      AI Processing Layer
+            ↓
+ Music Recommendation Engine
+            ↓
+     Embedded Player System
+🛠️ Tech Stack
+Layer
+Technology
+Interface
+HTML, CSS, JavaScript
+Emotion Engine
+face-api.js
+AI Intelligence
+Gemini 2.5 Flash
+Music Integration
+YouTube Data API
+Playback
+YouTube IFrame Player
+Backend
+Node.js + Express
+⚙️ Getting Started
+1. Clone the Repository
+Bash
+git clone https://github.com/TECH-SUGATA/Emotional-Aare-Machine-EAM-
+cd Emotional-Aare-Machine-EAM-
+2. Configure Environment
+Bash
+cd backend
 npm install
-
-# Create your .env file
 cp .env.example .env
-```
-
-Open `.env` and paste your keys:
-```env
-GEMINI_API_KEY=AIza...your_gemini_key...
-YOUTUBE_API_KEY=AIza...your_youtube_key...
+Update your environment variables:
+Environment
+GEMINI_API_KEY=your_key
+YOUTUBE_API_KEY=your_key
 PORT=3000
-ALLOWED_ORIGINS=http://localhost:5500,http://127.0.0.1:5500,http://localhost:3000
-```
-
-```bash
-# Start the server
+3. Run the Application
+Bash
 npm start
-```
+Open in browser:
 
-You'll see:
-```
-╔════════════════════════════════════════╗
-║   🪞  EAM Mirror API  v2.0  (FREE)      ║
-╠════════════════════════════════════════╣
-║  HTTP  →  http://localhost:3000        ║
-╚════════════════════════════════════════╝
+http://localhost:3000
+📱 User Journey
+Plain text
+Launch App  
+   ↓  
+Onboarding  
+   ↓  
+Live Emotion Scan  
+   ↓  
+Music Recommendation  
+   ↓  
+AI Conversation  
+   ↓  
+Mood Tracking
+🎵 Music Ecosystem
+Supports a wide range of content:
+Hindi
+Bengali
+Punjabi
+Tamil
+English
+Instrumental / Ambient
+🚢 Deployment
+Frontend
+GitHub Pages
+Backend
+Render / Node hosting platforms
+📁 Project Structure
+Plain text
 
-  Gemini key  : ✓ loaded
-  YouTube key : ✓ loaded
-```
-
----
-
-### Step 3 — Open the App
-
-Just go to: **http://localhost:3000**
-
-That's it! 🎉
-
----
-
-## 🎵 Supported Indian Languages & Artists
-
-| Language | Artists |
-|---|---|
-| 🇮🇳 Hindi | Arijit Singh, AR Rahman, Shreya Ghoshal, Atif Aslam, Sonu Nigam, KK, Mohit Chauhan, Armaan Malik, Jubin Nautiyal, Neha Kakkar |
-| 🎵 Bengali | Nachiketa, Lopamudra Mitra, Rupankar, Shironamhin, Anupam Roy, Arijit Singh Bengali |
-| 🎤 Punjabi | Diljit Dosanjh, Satinder Sartaaj, Gurdas Maan, B Praak, Harrdy Sandhu |
-| 🎭 Tamil | AR Rahman Tamil, Sid Sriram, Anirudh Ravichander |
-| 🎸 English | Major international artists |
-| 🎷 Instrumental | Classical Indian, Lofi, Meditation |
-
----
-
-## 📱 App Flow
-
-```
-Splash → Login → Onboarding
-              ↓
-   Scanner (face-api.js detects emotion live)
-              ↓
-   Music Page (Gemini AI picks songs → YouTube plays them)
-              ↓
-   Chat (Gemini 2.5 Flash talks in Hindi/Hinglish/English)
-              ↓
-   Journal (save mood entries with emotion tagging)
-```
-
----
-
-## 🔧 Troubleshooting
-
-| Problem | Fix |
-|---|---|
-| "Backend offline" | Run `npm start` in `backend/` folder |
-| "No music loading" | Check YouTube API key in `.env` |
-| "AI chat not working" | Check Gemini API key in `.env` |
-| "Camera denied" | Allow camera in browser — app works in demo mode too |
-| Port 3000 in use | Change `PORT=3001` in `.env` |
-
----
-
-## 🚢 Deploy for Free
-
-**Render.com** (recommended):
-1. Push to GitHub
-2. New Web Service → connect repo → `npm start`
-3. Add env vars in Render dashboard
-
----
 
 ## 📁 Structure
 
@@ -156,3 +126,35 @@ eam-mirror/
     ├── index.html
     └── js/app.js
 ```
+
+🌱 Roadmap
+🎧 Spotify & advanced streaming integration
+📊 Emotion analytics dashboard
+☁️ Cloud-based journal sync
+📱 Mobile-native version
+🧠 Enhanced emotion modeling
+👨‍💻 Creator
+Sugata Nayak
+Frontend Developer • AI Builder
+⭐ Support the Project
+If this project resonates with you:
+⭐ Star the repository
+🍴 Fork and build on it
+📢 Share with others
+📜 License
+Open-source and available for learning and innovation.
+If you want next-level upgrade, I can:
+Add hero GIF preview (like SaaS landing page)
+Create case study style README (for placements/interviews)
+Make LinkedIn + portfolio description matching this README
+Just tell me 👍
+
+
+#### 🌟 Show your support
+
+If you find this project useful or it helped you save some time, please consider giving it a **Star**! it helps more people discover the project.
+
+* **Star** this repository to show your appreciation.
+* **Fork** the project if you want to build your own version.
+* **Share** the project with your friends or on social media.
+* 
