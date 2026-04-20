@@ -93,9 +93,13 @@ eam-mirror/
 [ ] Phase 2: Advanced Emotion Analytics Dashboard for trend tracking.
 [ ] Phase 3: Multi-modal support (Voice tone analysis).
 [ ] Phase 4: Mobile-native version for Android and iOS.
+
+
 👨‍💻 Developed By
 Sugata Nayak
 Full Stack Developer • AI/ML Builder
+
+
 🌟 Show Your Support
 If this project resonates with you:
 Star the repository to show your appreciation.
