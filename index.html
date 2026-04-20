@@ -1297,7 +1297,6 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 </html>
 
 
-
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
@@ -1321,6 +1320,7 @@ function playSong(videoId) {
   }
 }
 
+// ✅ CHAT FUNCTION
 async function sendChat() {
   const input = document.getElementById('chat-input');
   const message = input.value.trim();
@@ -1338,14 +1338,26 @@ async function sendChat() {
       })
     });
 
-    const data = await res.json();
+    const text = await res.text();
+    console.log("RAW:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      addMessage(text, 'ai');
+      return;
+    }
+
     addMessage(data.reply || data.message || "No response", 'ai');
 
   } catch (err) {
+    console.error(err);
     addMessage("Server error 😢", 'ai');
   }
 }
 
+// ✅ MESSAGE FUNCTION
 function addMessage(text, type) {
   const chatBody = document.getElementById('chat-body');
   const msg = document.createElement('div');
@@ -1357,6 +1369,3 @@ function addMessage(text, type) {
 
 </body>
 </html>
-
-
-
