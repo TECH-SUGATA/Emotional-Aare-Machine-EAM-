@@ -60,8 +60,8 @@ wss.on('connection', (ws) => {
 /* ─── Middleware ─── */
 app.use(helmet({ crossOriginEmbedderPolicy: false }));
 
-// ✅ IMPORTANT: serve frontend correctly
-app.use(express.static(path.join(__dirname)));
+// ✅ FIX: Serve ONLY frontend folder (NOT root)
+app.use(express.static(path.join(__dirname, 'public')));
 
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
@@ -103,7 +103,7 @@ const musicLimiter = rateLimit({
   max: 80
 });
 
-/* ─── API Routes (VERY IMPORTANT: BEFORE *) ─── */
+/* ─── API Routes (IMPORTANT: BEFORE *) ─── */
 app.use('/api/chat', chatLimiter, chatRoutes);
 app.use('/api/music', musicLimiter, musicRoutes);
 app.use('/api/emotion', emotionRoutes);
@@ -124,7 +124,7 @@ app.get('/api/health', (req, res) => {
 
 /* ─── SPA Fallback (ALWAYS LAST) ─── */
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 /* ─── Error Handler ─── */
