@@ -1299,3 +1299,64 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 
 
 <script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+let ytPlayer;
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('yt-iframe-container', {
+    height: '0',
+    width: '0',
+    videoId: '',
+    playerVars: {
+      autoplay: 1,
+      controls: 0
+    }
+  });
+}
+
+function playSong(videoId) {
+  if (ytPlayer) {
+    ytPlayer.loadVideoById(videoId);
+  }
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const message = input.value.trim();
+  if (!message) return;
+
+  addMessage(message, 'user');
+  input.value = '';
+
+  try {
+    const res = await fetch('https://emotional-aare-machine-eam-backend.onrender.com/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [{ role: 'user', content: message }]
+      })
+    });
+
+    const data = await res.json();
+    addMessage(data.reply || data.message || "No response", 'ai');
+
+  } catch (err) {
+    addMessage("Server error 😢", 'ai');
+  }
+}
+
+function addMessage(text, type) {
+  const chatBody = document.getElementById('chat-body');
+  const msg = document.createElement('div');
+  msg.className = 'msg ' + type;
+  msg.innerHTML = `<div class="msg-bub">${text}</div>`;
+  chatBody.appendChild(msg);
+}
+</script>
+
+</body>
+</html>
+
+
+
